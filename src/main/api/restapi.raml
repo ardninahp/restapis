@@ -1,0 +1,13 @@
+#%RAML 1.0
+version: 1.0
+title: Restapi
+baseUri: http://localhost:8081/api
+/unitedFlights:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example:
+              !include Example/unitedFlights_Get_responses.json 
+         

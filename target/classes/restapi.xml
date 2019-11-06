@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+    <http:listener-config name="restapi-httpListenerConfig" host="0.0.0.0" port="8082" doc:name="HTTP Listener Configuration"/>
+    <apikit:config name="restapi-config" raml="restapi.raml" consoleEnabled="false" doc:name="Router"/>
+    <flow name="restapi-main">
+        <http:listener config-ref="restapi-httpListenerConfig" path="/api/*" doc:name="HTTP"/>
+        <apikit:router config-ref="restapi-config" doc:name="APIkit Router"/>
+        <exception-strategy ref="restapi-apiKitGlobalExceptionMapping" doc:name="Reference Exception Strategy"/>
+    </flow>
+    <flow name="restapi-console">
+        <http:listener config-ref="restapi-httpListenerConfig" path="/console/*" doc:name="HTTP"/>
+        <apikit:console config-ref="restapi-config" doc:name="APIkit Console"/>
+    </flow>
+    <flow name="restapiFlow">
+        <flow-ref name="unitedflightsFlow" doc:name="Flow Reference"/>
+    </flow>
+    <flow name="get:/unitedFlights:restapi-config">
+        <set-payload value="{&#xA;&#x9;&quot;flights&quot;: [{&#xA;&#x9;&#x9;&quot;code&quot;: &quot;ER38sd&quot;,&#xA;&#x9;&#x9;&quot;price&quot;: 400,&#xA;&#x9;&#x9;&quot;origin&quot;: &quot;MUA&quot;,&#xA;&#x9;&#x9;&quot;destination&quot;: &quot;SFO&quot;,&#xA;&#x9;&#x9;&quot;departureDate&quot;: &quot;2015/03/20&quot;,&#xA;&#x9;&#x9;&quot;airlineName&quot;: &quot;United&quot;,&#xA;&#x9;&#x9;&quot;planeType&quot;: &quot;Boeing 737&quot;,&#xA;&#x9;&#x9;&quot;emptySeats&quot;: 0&#xA;&#x9;}, {&#xA;&#x9;&#x9;&quot;code&quot;: &quot;ER45if&quot;,&#xA;&#x9;&#x9;&quot;price&quot;: 345.99,&#xA;&#x9;&#x9;&quot;origin&quot;: &quot;MUA&quot;,&#xA;&#x9;&#x9;&quot;destination&quot;: &quot;LAX&quot;,&#xA;&#x9;&#x9;&quot;departureDate&quot;: &quot;2015/02/11&quot;,&#xA;&#x9;&#x9;&quot;airlineName&quot;: &quot;United&quot;,&#xA;&#x9;&#x9;&quot;planeType&quot;: &quot;Boeing 737&quot;,&#xA;&#x9;&#x9;&quot;emptySeats&quot;: 52&#xA;&#x9;}, {&#xA;&#x9;&#x9;&quot;code&quot;: &quot;ER45jd&quot;,&#xA;&#x9;&#x9;&quot;price&quot;: 346,&#xA;&#x9;&#x9;&quot;origin&quot;: &quot;MUA&quot;,&#xA;&#x9;&#x9;&quot;destination&quot;: &quot;LAX&quot;,&#xA;&#x9;&#x9;&quot;departureDate&quot;: &quot;2015/04/11&quot;,&#xA;&#x9;&#x9;&quot;airlineName&quot;: &quot;United&quot;,&#xA;&#x9;&#x9;&quot;planeType&quot;: &quot;Boeing 777&quot;,&#xA;&#x9;&#x9;&quot;emptySeats&quot;: 12&#xA;&#x9;}, {&#xA;&#x9;&#x9;&quot;code&quot;: &quot;ER0945&quot;,&#xA;&#x9;&#x9;&quot;price&quot;: 423,&#xA;&#x9;&#x9;&quot;origin&quot;: &quot;MUA&quot;,&#xA;&#x9;&#x9;&quot;destination&quot;: &quot;LAX&quot;,&#xA;&#x9;&#x9;&quot;departureDate&quot;: &quot;2015/06/11&quot;,&#xA;&#x9;&#x9;&quot;airlineName&quot;: &quot;United&quot;,&#xA;&#x9;&#x9;&quot;planeType&quot;: &quot;Boeing 707&quot;,&#xA;&#x9;&#x9;&quot;emptySeats&quot;: 0&#xA;&#x9;}, {&#xA;&#x9;&#x9;&quot;code&quot;: &quot;ER9fje&quot;,&#xA;&#x9;&#x9;&quot;price&quot;: 845,&#xA;&#x9;&#x9;&quot;origin&quot;: &quot;MUA&quot;,&#xA;&#x9;&#x9;&quot;destination&quot;: &quot;CLE&quot;,&#xA;&#x9;&#x9;&quot;departureDate&quot;: &quot;2015/07/11&quot;,&#xA;&#x9;&#x9;&quot;airlineName&quot;: &quot;United&quot;,&#xA;&#x9;&#x9;&quot;planeType&quot;: &quot;Boeing 727&quot;,&#xA;&#x9;&#x9;&quot;emptySeats&quot;: 32&#xA;&#x9;}, {&#xA;&#x9;&#x9;&quot;code&quot;: &quot;ER3kfd&quot;,&#xA;&#x9;&#x9;&quot;price&quot;: 245,&#xA;&#x9;&#x9;&quot;origin&quot;: &quot;MUA&quot;,&#xA;&#x9;&#x9;&quot;destination&quot;: &quot;CLE&quot;,&#xA;&#x9;&#x9;&quot;departureDate&quot;: &quot;2015/08/11&quot;,&#xA;&#x9;&#x9;&quot;airlineName&quot;: &quot;United&quot;,&#xA;&#x9;&#x9;&quot;planeType&quot;: &quot;Boeing 747&quot;,&#xA;&#x9;&#x9;&quot;emptySeats&quot;: 13&#xA;&#x9;}, {&#xA;&#x9;&#x9;&quot;code&quot;: &quot;ER39rk&quot;,&#xA;&#x9;&#x9;&quot;price&quot;: 945,&#xA;&#x9;&#x9;&quot;origin&quot;: &quot;MUA&quot;,&#xA;&#x9;&#x9;&quot;destination&quot;: &quot;SFO&quot;,&#xA;&#x9;&#x9;&quot;departureDate&quot;: &quot;2015/09/11&quot;,&#xA;&#x9;&#x9;&quot;airlineName&quot;: &quot;United&quot;,&#xA;&#x9;&#x9;&quot;planeType&quot;: &quot;Boeing 757&quot;,&#xA;&#x9;&#x9;&quot;emptySeats&quot;: 54&#xA;&#x9;}, {&#xA;&#x9;&#x9;&quot;code&quot;: &quot;ER39rj&quot;,&#xA;&#x9;&#x9;&quot;price&quot;: 954,&#xA;&#x9;&#x9;&quot;origin&quot;: &quot;MUA&quot;,&#xA;&#x9;&#x9;&quot;destination&quot;: &quot;SFO&quot;,&#xA;&#x9;&#x9;&quot;departureDate&quot;: &quot;2015/02/12&quot;,&#xA;&#x9;&#x9;&quot;airlineName&quot;: &quot;United&quot;,&#xA;&#x9;&#x9;&quot;planeType&quot;: &quot;Boeing 777&quot;,&#xA;&#x9;&#x9;&quot;emptySeats&quot;: 23&#xA;&#x9;}, {&#xA;&#x9;&#x9;&quot;code&quot;: &quot;ER95jf&quot;,&#xA;&#x9;&#x9;&quot;price&quot;: 234,&#xA;&#x9;&#x9;&quot;origin&quot;: &quot;MUA&quot;,&#xA;&#x9;&#x9;&quot;destination&quot;: &quot;PDF&quot;,&#xA;&#x9;&#x9;&quot;departureDate&quot;: &quot;2015/02/12&quot;,&#xA;&#x9;&#x9;&quot;airlineName&quot;: &quot;United&quot;,&#xA;&#x9;&#x9;&quot;planeType&quot;: &quot;Boeing 787&quot;,&#xA;&#x9;&#x9;&quot;emptySeats&quot;: 23&#xA;&#x9;}, {&#xA;&#x9;&#x9;&quot;code&quot;: &quot;ER49fd&quot;,&#xA;&#x9;&#x9;&quot;price&quot;: 853,&#xA;&#x9;&#x9;&quot;origin&quot;: &quot;MUA&quot;,&#xA;&#x9;&#x9;&quot;destination&quot;: &quot;PDX&quot;,&#xA;&#x9;&#x9;&quot;departureDate&quot;: &quot;2015/02/13&quot;,&#xA;&#x9;&#x9;&quot;airlineName&quot;: &quot;United&quot;,&#xA;&#x9;&#x9;&quot;planeType&quot;: &quot;Boeing 777&quot;,&#xA;&#x9;&#x9;&quot;emptySeats&quot;: 0&#xA;&#x9;}, {&#xA;&#x9;&#x9;&quot;code&quot;: &quot;ER95jf&quot;,&#xA;&#x9;&#x9;&quot;price&quot;: 483,&#xA;&#x9;&#x9;&quot;origin&quot;: &quot;MUA&quot;,&#xA;&#x9;&#x9;&quot;destination&quot;: &quot;PDX&quot;,&#xA;&#x9;&#x9;&quot;departureDate&quot;: &quot;2015/02/20&quot;,&#xA;&#x9;&#x9;&quot;airlineName&quot;: &quot;United&quot;,&#xA;&#x9;&#x9;&quot;planeType&quot;: &quot;Boeing 777&quot;,&#xA;&#x9;&#x9;&quot;emptySeats&quot;: 95&#xA;&#x9;}, {&#xA;&#x9;&#x9;&quot;code&quot;: &quot;ER04kf&quot;,&#xA;&#x9;&#x9;&quot;price&quot;: 532,&#xA;&#x9;&#x9;&quot;origin&quot;: &quot;MUA&quot;,&#xA;&#x9;&#x9;&quot;destination&quot;: &quot;PDX&quot;,&#xA;&#x9;&#x9;&quot;departureDate&quot;: &quot;2015/02/12&quot;,&#xA;&#x9;&#x9;&quot;airlineName&quot;: &quot;United&quot;,&#xA;&#x9;&#x9;&quot;planeType&quot;: &quot;Boeing 777&quot;,&#xA;&#x9;&#x9;&quot;emptySeats&quot;: 30&#xA;&#x9;}]&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <apikit:mapping-exception-strategy name="restapi-apiKitGlobalExceptionMapping">
+        <apikit:mapping statusCode="404">
+            <apikit:exception value="org.mule.module.apikit.exception.NotFoundException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Resource not found&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="405">
+            <apikit:exception value="org.mule.module.apikit.exception.MethodNotAllowedException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Method not allowed&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="415">
+            <apikit:exception value="org.mule.module.apikit.exception.UnsupportedMediaTypeException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Unsupported media type&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="406">
+            <apikit:exception value="org.mule.module.apikit.exception.NotAcceptableException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Not acceptable&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="400">
+            <apikit:exception value="org.mule.module.apikit.exception.BadRequestException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Bad request&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+    </apikit:mapping-exception-strategy>
+</mule>
